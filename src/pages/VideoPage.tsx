@@ -54,12 +54,12 @@ export default function VideoPage() {
             <span className="font-semibold tracking-tight text-white">Виртуальный СММщик</span>
           </div>
           <Button size="sm" onClick={() => navigate('/quiz')}>
-            Записаться <ArrowRight className="w-4 h-4" />
+            Хочу онлайн-встречу <ArrowRight className="w-4 h-4" />
           </Button>
         </div>
       </nav>
 
-      <section className="px-5 pt-16 pb-12">
+      <section className="px-4 sm:px-5 pt-8 pb-4">
         <div className="max-w-3xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -70,22 +70,13 @@ export default function VideoPage() {
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
             <span className="inline-block">Шаг 2 · Видеопрезентация</span>
           </motion.div>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.05 }}
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-balance text-white"
-          >
-            Как запустить <span className="gradient-text">ИИ-маркетинг</span> для вашего бизнеса:
-            Видеоразбор платформы
-          </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.12 }}
             className="mt-5 text-lg text-zinc-400 max-w-xl mx-auto leading-relaxed"
           >
-            Посмотрите короткое видео — и запишитесь на живую демо-презентацию, чтобы мы внедрили и установили этот продукт вам под ключ.
+            Посмотрите короткое видео — и запишитесь на онлайн-встречу, чтобы мы внедрили и установили этот продукт вам под ключ.
           </motion.p>
         </div>
       </section>
@@ -159,11 +150,8 @@ export default function VideoPage() {
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-2xl font-bold mb-3 tracking-tight text-white">Готовы увидеть платформу в деле?</h2>
-            <p className="text-zinc-400 mb-6 text-lg leading-relaxed">
-              Запишитесь на короткую демо-презентацию — мы внедряем и устанавливаем этот продукт предпринимателям под ключ.
-            </p>
             <Button size="lg" onClick={() => navigate('/quiz')}>
-              <CalendarClock className="w-5 h-5" /> Записаться на демо-презентацию
+              <CalendarClock className="w-5 h-5" /> Хочу онлайн-встречу
             </Button>
           </motion.div>
         </div>
