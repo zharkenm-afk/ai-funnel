@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-[#09090b] text-zinc-200 font-sans antialiased;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: rgba(24, 24, 27, 0.55);
+    border: 1px solid rgba(63, 63, 70, 0.5);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  nav.glass {
+    border-width: 0 0 1px 0;
+  }
+  .gradient-text {
+    @apply bg-gradient-to-r from-teal-300 to-emerald-400 bg-clip-text text-transparent;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+}
