@@ -25,8 +25,13 @@ export default function QuizPage() {
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  const INSTAGRAM_RE = /^@?[a-zA-Z0-9._]{1,30}$/;
+
   const validate = (field: string, value: string) => {
     if (!value.trim()) return 'Обязательное поле';
+    if (field === 'instagram' && !INSTAGRAM_RE.test(value.trim())) {
+      return 'Только латинские буквы — например @yourname';
+    }
     return '';
   };
 
@@ -108,7 +113,7 @@ export default function QuizPage() {
             transition={{ duration: 0.6, delay: 0.12 }}
             className="mt-4 text-zinc-400 text-lg leading-relaxed"
           >
-            Это займёт меньше минуты — и поможет подготовить демо-презентацию именно под вас.
+            Это займёт меньше минуты — и поможет решение именно под вас.
           </motion.p>
         </div>
       </section>
@@ -149,7 +154,7 @@ export default function QuizPage() {
                 <Input
                   name="niche"
                   label="Ниша бизнеса"
-                  placeholder="Например: консалтинг, клиника, психология"
+                  placeholder="Например: психология, стоматология, фитнес"
                   value={lead.niche}
                   onChange={(e) => {
                     updateLead({ niche: e.target.value });
@@ -191,7 +196,7 @@ export default function QuizPage() {
                 <Input
                   name="instagram"
                   label="Instagram-аккаунт"
-                  placeholder="@ваш_аккаунт"
+                  placeholder="@yourname (только латинские буквы)"
                   value={lead.instagram}
                   onChange={(e) => {
                     updateLead({ instagram: e.target.value });
