@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, CalendarClock, CheckCircle2 } from 'lucide-react';
+import { Sparkles, CalendarClock } from 'lucide-react';
 import { PageTransition } from '@/components/PageTransition';
-import { Card } from '@/components/ui/Card';
 import { useFunnel } from '@/context/FunnelContext';
 
 declare global {
@@ -83,25 +82,25 @@ export default function CalendarPage() {
           <div className="text-base text-zinc-400">Шаг 4 · Запись</div>
         </div>
       </nav>
-      <section className="px-4 sm:px-5 pt-12 pb-8">
+      <section className="px-4 sm:px-5 pt-10 pb-4">
         <div className="max-w-2xl mx-auto text-center">
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="text-3xl sm:text-4xl font-bold tracking-tight text-balance text-white">
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
             Выберите удобное время
           </motion.h1>
         </div>
       </section>
-      <section className="px-4 sm:px-5 pb-12">
-        <div className="max-w-3xl mx-auto">
-          <Card className="p-2 overflow-hidden border-zinc-800">
-            <div className="rounded-xl overflow-hidden border border-primary-500/20 bg-card">
-              <div ref={containerRef} className="w-full h-[600px] rounded-xl overflow-hidden" />
-            </div>
-          </Card>
+      <section className="px-2 sm:px-4 pb-8">
+        <div className="max-w-4xl mx-auto">
+          <div
+            ref={containerRef}
+            className="w-full min-h-[700px] rounded-xl overflow-hidden"
+            style={{ minHeight: '700px' }}
+          />
         </div>
       </section>
-      <section className="px-4 sm:px-5 pb-20">
+      <section className="px-4 sm:px-5 pb-16">
         <div className="max-w-2xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 text-base text-zinc-400">
+          <div className="inline-flex items-center gap-2 text-sm text-zinc-400">
             <CalendarClock className="w-4 h-4 text-primary" />
             После записи мы пришлём подтверждение в WhatsApp
           </div>
