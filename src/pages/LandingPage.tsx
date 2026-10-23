@@ -188,7 +188,7 @@ export default function LandingPage() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-lg text-zinc-300 mb-7"
           >
             <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse" />
-            <span className="inline-block">Виртуальный СММ-менеджер для Предпринимателей · СММ-менеджеров · Экспертов · Сервисных компаний</span>
+            <span className="inline-block">для Предпринимателей · СММ-менеджеров · Экспертов · Сервисных компаний</span>
           </motion.div>
 
           <motion.h1
@@ -197,12 +197,12 @@ export default function LandingPage() {
             transition={{ duration: 0.6, delay: 0.05 }}
             className="text-[1.75rem] leading-[1.3] xs:text-3xl sm:text-5xl lg:text-[3.5rem] lg:leading-[1.15] font-bold tracking-tight text-white text-balance"
           >
-            <span className="inline-block">Виртуальный СММщик на базе{' '}
+            <span className="inline-block">Универсальный контент-мейкер и смм-специалист на базе{' '}
               <span className="bg-gradient-to-r from-teal-300 to-emerald-400 bg-clip-text text-transparent">ИИ</span>
             </span>
             <br />
-            <span className="inline-block">Reels, карусели и автопостинг под ключ за{' '}
-              <span className="bg-gradient-to-r from-teal-300 to-emerald-400 bg-clip-text text-transparent">10 минут в день</span>
+            <span className="inline-block">Reels, карусели и автопостинг, работающий{' '}
+              <span className="bg-gradient-to-r from-teal-300 to-emerald-400 bg-clip-text text-transparent">24/7</span>
             </span>
           </motion.h1>
 
