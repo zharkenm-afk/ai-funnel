@@ -1,0 +1,148 @@
+{
+  "name": "AI Funnel — Cal.com Booking",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ai-funnel-cal",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-cal",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "webhookId": "ai-funnel-cal"
+    },
+    {
+      "parameters": {
+        "resource": "lead",
+        "operation": "create",
+        "pipeline_id": "",
+        "name": "=Cal.com: {{ ($json.body.attendees && $json.body.attendees[0] && $json.body.attendees[0].name) || $json.body.phone || 'Новый лид' }}",
+        "additionalFields": {
+          "custom_fields_values": [
+            {
+              "field_id": 362449,
+              "values": [
+                {
+                  "value": "={{ $json.body.phone }}"
+                }
+              ]
+            }
+          ],
+          "contacts": [
+            {
+              "name": "={{ ($json.body.attendees && $json.body.attendees[0] && $json.body.attendees[0].name) || 'Клиент' }}",
+              "custom_fields_values": [
+                {
+                  "field_id": 362449,
+                  "values": [
+                    {
+                      "value": "={{ $json.body.phone }}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "tags": [
+            {
+              "name": "ai-funnel"
+            },
+            {
+              "name": "cal-booking"
+            }
+          ]
+        }
+      },
+      "id": "amocrm-create-lead-cal",
+      "name": "amoCRM — Создать сделку (Cal)",
+      "type": "n8n-nodes-base.amoCrm",
+      "typeVersion": 1,
+      "position": [480, 200],
+      "credentials": {
+        "amoCrmOAuth2Api": {
+          "id": "1",
+          "name": "amoCRM account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "note",
+        "operation": "create",
+        "entityType": "leads",
+        "entityId": "={{ $('amoCRM — Создать сделку (Cal)').item.json.id || '' }}",
+        "text": "=Cal.com бронирование\nВремя: {{ $json.body.startTime }}\nТелефон: {{ $json.body.phone }}\nАттенди: {{ JSON.stringify($json.body.attendees || []) }}"
+      },
+      "id": "amocrm-note-cal",
+      "name": "amoCRM — Заметка о записи",
+      "type": "n8n-nodes-base.amoCrm",
+      "typeVersion": 1,
+      "position": [720, 200],
+      "credentials": {
+        "amoCrmOAuth2Api": {
+          "id": "1",
+          "name": "amoCRM account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"ok\": true }"
+      },
+      "id": "respond-ok",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [960, 200]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "amoCRM — Создать сделку (Cal)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "amoCRM — Создать сделку (Cal)": {
+      "main": [
+        [
+          {
+            "node": "amoCRM — Заметка о записи",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "amoCRM — Заметка о записи": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1",
+  "meta": {
+    "instanceId": ""
+  },
+  "tags": ["ai-funnel"]
+}

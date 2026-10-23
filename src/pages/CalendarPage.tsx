@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Sparkles, CalendarClock } from 'lucide-react';
 import { PageTransition } from '@/components/PageTransition';
 import { useFunnel } from '@/context/FunnelContext';
+import { WEBHOOK_CAL } from '@/config/webhooks';
 
 declare global {
   interface Window {
@@ -22,6 +23,25 @@ export default function CalendarPage() {
   const { lead } = useFunnel();
   const containerRef = useRef<HTMLDivElement>(null);
   const initialized = useRef(false);
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const data = (e as CustomEvent).detail || {};
+      fetch(WEBHOOK_CAL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          phone: data.responses?.phone?.value || data.attendees?.[0]?.phone || '',
+          attendees: data.attendees || [],
+          startTime: data.startTime || '',
+          step: 'cal',
+          source: 'calendar',
+        }),
+      }).catch(() => {});
+    };
+    window.addEventListener('cal:booking_successful', handler);
+    return () => window.removeEventListener('cal:booking_successful', handler);
+  }, []);
 
   const name = (lead.fullName || `${lead.firstName} ${lead.lastName}`).trim();
   const phone = lead.phone;

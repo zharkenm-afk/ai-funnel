@@ -4,3 +4,4 @@
 // (VITE_WEBHOOK_STEP_1 и VITE_WEBHOOK_STEP_3).
 export const WEBHOOK_STEP_1: string = import.meta.env.VITE_WEBHOOK_STEP_1 || '';
 export const WEBHOOK_STEP_3: string = import.meta.env.VITE_WEBHOOK_STEP_3 || '';
+export const WEBHOOK_CAL: string = import.meta.env.VITE_WEBHOOK_CAL || '';

@@ -1,0 +1,83 @@
+{
+  "name": "AI Funnel — Step 3 (Quiz / Video watch)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ai-funnel-step3",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-step3",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "webhookId": "ai-funnel-step3"
+    },
+    {
+      "parameters": {
+        "resource": "note",
+        "operation": "create",
+        "entityType": "leads",
+        "entityId": "={{ $json.body.leadId || '' }}",
+        "text": "=AI Funnel Step 3\nPhone: {{ $json.body.phone }}\nAnswers: {{ JSON.stringify($json.body.answers || {}) }}\nSource: {{ $json.body.source }}"
+      },
+      "id": "amocrm-note",
+      "name": "amoCRM — Добавить заметку",
+      "type": "n8n-nodes-base.amoCrm",
+      "typeVersion": 1,
+      "position": [480, 300],
+      "credentials": {
+        "amoCrmOAuth2Api": {
+          "id": "1",
+          "name": "amoCRM account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"ok\": true }"
+      },
+      "id": "respond-ok",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [720, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "amoCRM — Добавить заметку",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "amoCRM — Добавить заметку": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1",
+  "meta": {
+    "instanceId": ""
+  },
+  "tags": ["ai-funnel"]
+}
