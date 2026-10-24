@@ -38,7 +38,7 @@ export default function QuizPage() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
-    (['fullName', 'phone', 'niche', 'role', 'instagram'] as const).forEach((f) => {
+    (['phone', 'niche', 'role', 'instagram'] as const).forEach((f) => {
       const err = validate(f, lead[f]);
       if (err) newErrors[f] = err;
     });
@@ -51,7 +51,7 @@ export default function QuizPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          fullName: lead.fullName,
+          fullName: lead.fullName || `${lead.firstName} ${lead.lastName}`.trim(),
           firstName: lead.firstName,
           lastName: lead.lastName,
           phone: lead.phone,
@@ -127,18 +127,6 @@ export default function QuizPage() {
           >
             <Card className="p-7 sm:p-9">
               <form onSubmit={handleSubmit} className="space-y-6">
-                <Input
-                  name="fullName"
-                  label="Имя и Фамилия"
-                  placeholder="Введите ваше имя и фамилию"
-                  value={lead.fullName}
-                  onChange={(e) => {
-                    updateLead({ fullName: e.target.value });
-                    if (errors.fullName) setErrors((p) => ({ ...p, fullName: '' }));
-                  }}
-                  error={errors.fullName}
-                />
-
                 <Input
                   name="phone"
                   label="WhatsApp-номер"

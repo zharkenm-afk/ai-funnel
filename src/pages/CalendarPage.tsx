@@ -24,25 +24,6 @@ export default function CalendarPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const initialized = useRef(false);
 
-  useEffect(() => {
-    const handler = (e: Event) => {
-      const data = (e as CustomEvent).detail || {};
-      fetch(WEBHOOK_CAL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          phone: data.responses?.phone?.value || data.attendees?.[0]?.phone || '',
-          attendees: data.attendees || [],
-          startTime: data.startTime || '',
-          step: 'cal',
-          source: 'calendar',
-        }),
-      }).catch(() => {});
-    };
-    window.addEventListener('cal:booking_successful', handler);
-    return () => window.removeEventListener('cal:booking_successful', handler);
-  }, []);
-
   const name = (lead.fullName || `${lead.firstName} ${lead.lastName}`).trim();
   const phone = lead.phone;
 
@@ -73,6 +54,24 @@ export default function CalendarPage() {
         hideEventTypeDetails: false,
         styles: { branding: { brandColor: '#2dd4bf' } },
         theme: 'dark',
+      });
+      window.Cal('on', {
+        action: 'bookingSuccessfulV2',
+        callback: (e: CustomEvent) => {
+          const data = e.detail?.data || {};
+          fetch(WEBHOOK_CAL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              phone,
+              fullName: name,
+              bookingUid: data.uid || '',
+              startTime: data.startTime || '',
+              step: 'cal',
+              source: 'calendar',
+            }),
+          }).catch(() => {});
+        },
       });
       if (containerRef.current) {
         window.Cal('inline', {
