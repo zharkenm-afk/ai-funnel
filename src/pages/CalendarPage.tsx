@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, CalendarClock } from 'lucide-react';
+import { Sparkles, CalendarClock, User, Briefcase } from 'lucide-react';
 import { PageTransition } from '@/components/PageTransition';
+import { Card } from '@/components/ui/Card';
 import { useFunnel } from '@/context/FunnelContext';
 import { WEBHOOK_CAL } from '@/config/webhooks';
 
@@ -120,6 +121,32 @@ export default function CalendarPage() {
           </motion.h1>
         </div>
       </section>
+      {(name || niche || role) && (
+        <section className="px-4 sm:px-5 pb-6">
+          <div className="max-w-4xl mx-auto">
+            <Card className="p-5 sm:p-6 flex flex-wrap items-center gap-x-8 gap-y-3">
+              {name && (
+                <div className="flex items-center gap-2.5">
+                  <User className="w-4 h-4 text-primary shrink-0" />
+                  <span className="text-base text-white font-medium">{name}</span>
+                </div>
+              )}
+              {niche && (
+                <div className="flex items-center gap-2.5">
+                  <Briefcase className="w-4 h-4 text-primary shrink-0" />
+                  <span className="text-base text-zinc-300">{niche}</span>
+                </div>
+              )}
+              {role && (
+                <div className="flex items-center gap-2.5">
+                  <Sparkles className="w-4 h-4 text-primary shrink-0" />
+                  <span className="text-base text-zinc-300">{role}</span>
+                </div>
+              )}
+            </Card>
+          </div>
+        </section>
+      )}
       <section className="px-2 sm:px-4 pb-8">
         <div className="max-w-4xl mx-auto">
           <div
