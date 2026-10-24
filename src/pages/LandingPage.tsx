@@ -132,7 +132,7 @@ export default function LandingPage() {
 
     setSubmitting(true);
     try {
-      await fetch(WEBHOOK_STEP_1, {
+      const res = await fetch(WEBHOOK_STEP_1, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -143,6 +143,10 @@ export default function LandingPage() {
           source: 'landing',
         }),
       });
+      const data = await res.json().catch(() => null);
+      if (data?.leadId) {
+        updateLead({ leadId: String(data.leadId) });
+      }
     } catch {
       // продолжаем воронку
     }

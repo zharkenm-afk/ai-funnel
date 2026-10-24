@@ -24,8 +24,11 @@ export default function CalendarPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const initialized = useRef(false);
 
-  const name = (lead.fullName || `${lead.firstName} ${lead.lastName}`).trim();
+  const name = `${lead.firstName} ${lead.lastName}`.trim();
   const phone = lead.phone;
+  const niche = lead.niche;
+  const role = lead.role;
+  const leadId = lead.leadId;
 
   useEffect(() => {
     if (initialized.current) return;
@@ -63,8 +66,11 @@ export default function CalendarPage() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
+              leadId: leadId || undefined,
               phone,
               fullName: name,
+              niche,
+              role,
               bookingUid: data.uid || '',
               startTime: data.startTime || '',
               step: 'cal',
@@ -74,15 +80,21 @@ export default function CalendarPage() {
         },
       });
       if (containerRef.current) {
+        const notesParts = [niche && `Ниша: ${niche}`, role && `Роль: ${role}`].filter(Boolean);
         window.Cal('inline', {
           elementOrSelector: containerRef.current,
           calLink: CAL_LINK,
-          config: { name: name || undefined, phone: phone || undefined, theme: 'dark' },
+          config: {
+            name: name || undefined,
+            phone: phone || undefined,
+            notes: notesParts.length ? notesParts.join(', ') : undefined,
+            theme: 'dark',
+          },
         });
       }
     };
     tryInit();
-  }, [name, phone]);
+  }, [name, phone, niche, role, leadId]);
 
   return (
     <PageTransition>

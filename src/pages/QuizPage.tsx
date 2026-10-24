@@ -51,7 +51,8 @@ export default function QuizPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          fullName: lead.fullName || `${lead.firstName} ${lead.lastName}`.trim(),
+          leadId: lead.leadId || undefined,
+          fullName: `${lead.firstName} ${lead.lastName}`.trim(),
           firstName: lead.firstName,
           lastName: lead.lastName,
           phone: lead.phone,
@@ -127,6 +128,15 @@ export default function QuizPage() {
           >
             <Card className="p-7 sm:p-9">
               <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label className="block mb-2 text-base font-medium text-zinc-400">
+                    Имя и Фамилия
+                  </label>
+                  <div className="h-12 px-4 flex items-center rounded-xl border border-zinc-800 bg-card text-white">
+                    {`${lead.firstName} ${lead.lastName}`.trim()}
+                  </div>
+                </div>
+
                 <Input
                   name="phone"
                   label="WhatsApp-номер"

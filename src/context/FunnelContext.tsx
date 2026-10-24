@@ -8,6 +8,7 @@ export interface Lead {
   niche: string;
   role: string;
   instagram: string;
+  leadId: string;
 }
 
 interface FunnelContextValue {
@@ -25,6 +26,7 @@ const EMPTY_LEAD: Lead = {
   niche: '',
   role: '',
   instagram: '',
+  leadId: '',
 };
 
 const STORAGE_KEY = 'ai-funnel-lead';
@@ -58,9 +60,7 @@ export function FunnelProvider({ children }: { children: ReactNode }) {
 
   const markStep1Submitted = () => {
     setStep1Submitted(true);
-    setLead((prev) =>
-      prev.fullName ? prev : { ...prev, fullName: `${prev.firstName} ${prev.lastName}`.trim() },
-    );
+    setLead((prev) => ({ ...prev, fullName: `${prev.firstName} ${prev.lastName}`.trim() }));
   };
 
   return (
